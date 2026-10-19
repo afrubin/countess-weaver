@@ -8,6 +8,7 @@ import shutil
 import countess.core.cmd
 
 DATA = pathlib.Path(__file__).parent / "data"
+EXAMPLE = pathlib.Path(__file__).parent.parent / "examples" / "fwd-saturation"
 
 PIPELINE = """
 [Load Counts]
@@ -65,3 +66,13 @@ def test_a_pipeline_run_from_its_ini_file_writes_the_converted_variants(tmp_path
     assert lines[2].split(",")[:3] == ["NC_000099.1:g.128del", "11", "NM_000099.1:c.14del"]
     assert lines[3].split(",")[:4] == ["NC_000099.1:g.121C>G", "13", "", ""]
     assert "ReferenceMismatchError" in lines[3]
+
+
+def test_the_documented_example_collapses_the_three_spellings_of_its_deletion(tmp_path: pathlib.Path) -> None:
+    example = tmp_path / "example"
+    shutil.copytree(EXAMPLE, example, ignore=shutil.ignore_patterns("output"))
+
+    countess.core.cmd.run([str(example / "fwd_saturation.ini")])
+
+    collapsed = (example / "output" / "collapsed.csv").read_text().splitlines()
+    assert '"NM_000099.1:c.14del","NP_000099.1:p.(Lys5SerfsTer?)",296.0,23.0' in collapsed

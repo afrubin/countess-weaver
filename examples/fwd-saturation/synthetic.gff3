@@ -1,0 +1,7 @@
+##gff-version 3
+NC_000099.1	RefSeq	gene	101	340	.	+	.	ID=gene-FWD;gene=FWD;Name=FWD
+NC_000099.1	RefSeq	mRNA	101	340	.	+	.	ID=rna-NM_000099.1;Parent=gene-FWD;gene=FWD;transcript_id=NM_000099.1
+NC_000099.1	RefSeq	exon	101	160	.	+	.	ID=exon-NM_000099.1-1;Parent=rna-NM_000099.1;gene=FWD;transcript_id=NM_000099.1
+NC_000099.1	RefSeq	exon	261	340	.	+	.	ID=exon-NM_000099.1-2;Parent=rna-NM_000099.1;gene=FWD;transcript_id=NM_000099.1
+NC_000099.1	RefSeq	CDS	121	160	.	+	0	ID=cds-NP_000099.1;Parent=rna-NM_000099.1;gene=FWD;protein_id=NP_000099.1
+NC_000099.1	RefSeq	CDS	261	310	.	+	2	ID=cds-NP_000099.1;Parent=rna-NM_000099.1;gene=FWD;protein_id=NP_000099.1

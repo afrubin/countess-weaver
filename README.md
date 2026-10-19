@@ -37,6 +37,12 @@ When weaver refuses a variant — it does not parse, a base it states is not the
 variant for a step — that row's outputs from the failing step on are NULL, and **On Error** says what else happens:
 an error column holding the step and weaver's message (the default), a logged warning, both, or neither.
 
+## Example
+
+[`examples/fwd-saturation`](examples/fwd-saturation/README.md) is a complete pipeline over a synthetic gene: it
+normalises saturation-editing variant counts, describes each variant on the transcript and protein, and sums the counts
+of variants written in different ways. Open it with `countess_gui examples/fwd-saturation/fwd_saturation.ini`.
+
 ## Development
 
 ```shell
