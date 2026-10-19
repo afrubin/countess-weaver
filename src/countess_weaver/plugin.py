@@ -313,7 +313,7 @@ def convert(mapper: weaver.VariantMapper, steps: Sequence[Step], key: dict[str, 
     try:
         variant = weaver.parse(hgvs)
     except weaver.HGVSError as exc:
-        return Conversion(outputs, f"parse: {type(exc).__name__}: {exc}")
+        return Conversion(outputs, f"parse: {describe(exc)}")
 
     for index, step in enumerate(steps):
         target = key[step.target_column] if step.target_column else step.target
@@ -325,9 +325,14 @@ def convert(mapper: weaver.VariantMapper, steps: Sequence[Step], key: dict[str, 
                 variant = mapper.normalize_variant(variant)
         # ValueError: weaver's answer to an operation given the wrong kind of variant (a c. step given a g.).
         except (weaver.HGVSError, ValueError) as exc:
-            return Conversion(outputs, f"{step.name}: {type(exc).__name__}: {exc}")
+            return Conversion(outputs, f"{step.name}: {describe(exc)}")
         outputs[index] = variant.format()
     return Conversion(outputs, None)
+
+
+def describe(exc: Exception) -> str:
+    # One line for a table cell: weaver's parse errors draw a caret diagram over several lines.
+    return f"{type(exc).__name__}: {' '.join(str(exc).split())}"
 
 
 def log_failures(results: duckdb.DuckDBPyRelation) -> None:

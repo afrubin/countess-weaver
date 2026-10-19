@@ -128,6 +128,15 @@ def test_an_unparseable_description_is_reported_as_a_parse_failure(reference_dir
     assert row["weaver_error"].startswith("parse: ")
 
 
+def test_an_error_is_written_on_one_line(reference_dir: pathlib.Path) -> None:
+    plugin = configure(reference_dir, FASTA_REFERENCE | NORMALISE)
+
+    [row] = run(plugin, [{"id": 1, "hgvs": "NC_000099.1:g.124G>"}])
+
+    assert "\n" not in row["weaver_error"]
+    assert "expected dna" in row["weaver_error"]
+
+
 def test_a_variant_on_a_sequence_the_fasta_lacks_is_reported(reference_dir: pathlib.Path) -> None:
     plugin = configure(reference_dir, FASTA_REFERENCE | NORMALISE)
 
